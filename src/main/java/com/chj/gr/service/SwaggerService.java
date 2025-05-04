@@ -39,9 +39,24 @@ public class SwaggerService {
 		
         eurekaClient.getApplications().getRegisteredApplications().forEach(app -> {
         	logger.info("Processing application: {}", app.getName());
+        	
             if (!app.getName().equalsIgnoreCase(appName /* "GR-CONF-SWAGGER-AGGREGATOR" */)) {
             	
                 app.getInstances().forEach(instance -> {
+                	
+                	/**
+                	 * Vérifier la métadonnée swagger.aggregator.enabled:
+                	 * eureka:
+						  instance:
+						    metadata-map:
+						      swagger.aggregator.enabled: false/true ?
+                	 */
+                    String swaggerEnabled = instance.getMetadata().getOrDefault("swagger.aggregator.enabled", "true");
+                    if (!"true".equalsIgnoreCase(swaggerEnabled)) {
+                        logger.info("Skipping service {}: swagger.aggregator.enabled={}", app.getName(), swaggerEnabled);
+                        return;
+                    }
+                	
 					String[] possibleEndpoints = {
 							String.format("http://%s:%s/v3/api-docs", instance.getHostName(), instance.getPort()),
 							String.format("http://%s:%s/v2/api-docs", instance.getHostName(), instance.getPort())
