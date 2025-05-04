@@ -1,0 +1,31 @@
+server:
+  port: 8765
+
+spring:
+  application:
+    name: gr-conf-swagger-aggregator
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+
+#springdoc:
+#  swagger-ui:
+#    urls:
+#      # Les URLs seront configurées dynamiquement
+#    disable-swagger-default-url: true
+#  api-docs:
+#    enabled: true
+
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    disable-swagger-default-url: true
+    urls: []
+  api-docs:
+    path: /v3/api-docs
+    enabled: true
