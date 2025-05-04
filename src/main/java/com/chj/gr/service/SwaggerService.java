@@ -29,11 +29,16 @@ public class SwaggerService {
 
 	public List<SwaggerResource> getSwaggerResources() {
 		
-		logger.info("Fetching registered applications from Eureka");
-		
+		logger.info("Fetching Swagger resources from Eureka");
         List<SwaggerResource> resources = new ArrayList<>();
+        var applications = eurekaClient.getApplications();
+        if (applications == null || applications.getRegisteredApplications().isEmpty()) {
+            logger.warn("No applications found in Eureka registry");
+            return resources;
+        }
+		
         eurekaClient.getApplications().getRegisteredApplications().forEach(app -> {
-        	
+        	logger.info("Processing application: {}", app.getName());
             if (!app.getName().equalsIgnoreCase(appName /* "GR-CONF-SWAGGER-AGGREGATOR" */)) {
             	
                 app.getInstances().forEach(instance -> {
@@ -44,21 +49,24 @@ public class SwaggerService {
 					
 					for (String swaggerUrl : possibleEndpoints) {
 					    try {
+					    	logger.info("Attempting to fetch Swagger JSON from: {}", swaggerUrl);
 					        String swaggerJson = restTemplate.getForObject(swaggerUrl, String.class);
 					        if (swaggerJson != null) {
 					            resources.add(new SwaggerResource(app.getName(), swaggerUrl));
 					            logger.info("Successfully retrieved Swagger JSON for service: {} at {}", app.getName(), swaggerUrl);
 					            break;
-					        }
+					        } else {
+	                            logger.warn("Swagger JSON is null for service: {} at {}", app.getName(), swaggerUrl);
+	                        }
 					    } catch (Exception e) {
 					        logger.error("Failed to retrieve Swagger JSON for service: {} at {}. Error: {}", 
 					            app.getName(), swaggerUrl, e.getMessage());
 					    }
 					}
-					
                 });
             }
         });
+        logger.info("Returning {} Swagger resources", resources.size());
         return resources;
     }
 
