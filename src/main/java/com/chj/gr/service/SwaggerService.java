@@ -56,15 +56,6 @@ public class SwaggerService {
                         return;
                     }
                     
-                    /**
-                     * 
-                     */
-//                    String host = "10.0.0.137";
-//                    String[] possibleEndpoints = {
-//							String.format("http://%s:%s/v3/api-docs", host, instance.getPort()),
-//							String.format("http://%s:%s/v2/api-docs", host, instance.getPort())
-//					};
-                    
 					String[] possibleEndpoints = {
 							String.format("http://%s:%s/v3/api-docs", instance.getHostName(), instance.getPort()),
 							String.format("http://%s:%s/v2/api-docs", instance.getHostName(), instance.getPort())
