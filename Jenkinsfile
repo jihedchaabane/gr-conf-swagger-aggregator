@@ -31,7 +31,7 @@ pipeline {
                 script {
                     // Construire uniquement le module Spring Boot
                     sh """
-                        mvn clean package ${MODULE_PATH}
+                        mvn clean package
                     """
                 }
             }
