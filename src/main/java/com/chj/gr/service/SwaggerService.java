@@ -28,8 +28,7 @@ public class SwaggerService {
 	}
 
 	public List<SwaggerResource> getSwaggerResources() {
-		
-		logger.info("Fetching Swagger resources from Eureka");
+		logger.info("***********************************************************************************");
         List<SwaggerResource> resources = new ArrayList<>();
         var applications = eurekaClient.getApplications();
         if (applications == null || applications.getRegisteredApplications().isEmpty()) {
@@ -56,12 +55,23 @@ public class SwaggerService {
                         logger.info("Skipping service {}: swagger.aggregator.enabled={}", app.getName(), swaggerEnabled);
                         return;
                     }
-                	
-					String[] possibleEndpoints = {
-							String.format("http://%s:%s/v3/api-docs", instance.getHostName(), instance.getPort()),
-							String.format("http://%s:%s/v2/api-docs", instance.getHostName(), instance.getPort())
+                    
+                    /**
+                     * 
+                     */
+                    String host = "10.0.0.137";
+                    String[] possibleEndpoints = {
+							String.format("http://%s:%s/v3/api-docs", host, instance.getPort()),
+							String.format("http://%s:%s/v2/api-docs", host, instance.getPort())
 					};
-					
+                    /**
+                     * 
+                     */
+                	
+//					String[] possibleEndpoints = {
+//							String.format("http://%s:%s/v3/api-docs", instance.getHostName(), instance.getPort()),
+//							String.format("http://%s:%s/v2/api-docs", instance.getHostName(), instance.getPort())
+//					};
 					for (String swaggerUrl : possibleEndpoints) {
 					    try {
 					    	logger.info("Attempting to fetch Swagger JSON from: {}", swaggerUrl);
