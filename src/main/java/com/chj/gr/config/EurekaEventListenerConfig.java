@@ -25,12 +25,16 @@ public class EurekaEventListenerConfig {
     private final EurekaClient eurekaClient;
     private final SwaggerService swaggerService;
     private final SwaggerUiConfigProperties swaggerUiConfig;
+    
+    private final SseController sseController;
 
     public EurekaEventListenerConfig(EurekaClient eurekaClient, SwaggerService swaggerService,
-			SwaggerUiConfigProperties swaggerUiConfig) {
+			SwaggerUiConfigProperties swaggerUiConfig,
+			SseController sseController) {
 		this.eurekaClient = eurekaClient;
 		this.swaggerService = swaggerService;
 		this.swaggerUiConfig = swaggerUiConfig;
+		this.sseController = sseController;
 	}
 
 	@PostConstruct
@@ -58,5 +62,7 @@ public class EurekaEventListenerConfig {
         });
         swaggerUiConfig.setUrls(urls);
         logger.info("Configured {} Swagger URLs", urls.size());
+        
+        sseController.sendEurekaUpdateEvent(); // Notifier les clients via SSE.
     }
 }
