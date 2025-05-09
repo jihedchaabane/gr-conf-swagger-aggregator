@@ -12,10 +12,7 @@
 //import com.chj.gr.service.SwaggerService;
 //import com.chj.gr.service.SwaggerService.SwaggerResource;
 //
-//import lombok.RequiredArgsConstructor;
-//
 //@Configuration
-//@RequiredArgsConstructor
 //public class SwaggerUiConfig {
 //
 //	private final SwaggerService swaggerService;

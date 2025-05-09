@@ -15,10 +15,7 @@ import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.EurekaEvent;
 import com.netflix.discovery.EurekaEventListener;
 
-//import lombok.RequiredArgsConstructor;
-
 @Configuration
-//@RequiredArgsConstructor
 public class EurekaEventListenerConfig {
 	
     private static final Logger logger = LoggerFactory.getLogger(EurekaEventListenerConfig.class);

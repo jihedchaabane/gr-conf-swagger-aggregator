@@ -50,8 +50,8 @@ public class SwaggerService {
 						    metadata-map:
 						      swagger.aggregator.enabled: false/true ?
                 	 */
-                    String swaggerEnabled = instance.getMetadata().getOrDefault("swagger.aggregator.enabled", "true");
-                    if (!"true".equalsIgnoreCase(swaggerEnabled)) {
+                    String swaggerEnabled = instance.getMetadata().getOrDefault("swagger.aggregator.enabled", "false");
+                    if (!"true".equals(swaggerEnabled)) {
                         logger.info("Skipping service {}: swagger.aggregator.enabled={}", app.getName(), swaggerEnabled);
                         return;
                     }
