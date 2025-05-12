@@ -15,8 +15,6 @@ pipeline {
         // common-network
         DOCKER_NETWORK = 'springboot-network'
         
-        // eureka-server url.
-        EUREKA_URL = 'http://container-springboot-conf-eureka-server:8761/eureka/'
         CONFIG_SERVER_ADDR = 'http://container-springboot-conf-config-server:8762'
     }
     stages {
@@ -130,7 +128,6 @@ pipeline {
                     sh """
                         docker run \
                         	-e SPRING_PROFILES_ACTIVE=${ACTIVE_PROFILE} \
-                        	-e EUREKA_ADDR=${EUREKA_URL} \
                         	-e CONFIG_SERVER_ADDR=${CONFIG_SERVER_ADDR} \
                         	-d --name ${CONTAINER_NAME} --network ${DOCKER_NETWORK} \
                         	-p ${APP_PORT}:${APP_PORT} \
