@@ -19,6 +19,11 @@
     </properties>
 
     <dependencies>
+    	<dependency>
+		    <groupId>com.chj.gr</groupId>
+		    <artifactId>gr-common-configs</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
         <!-- Spring Boot Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -43,12 +48,6 @@
 		    <groupId>org.springframework.cloud</groupId>
 		    <artifactId>spring-cloud-starter-bootstrap</artifactId>
 		</dependency>
-        <!-- Springdoc OpenAPI -->
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.6.9</version>
-        </dependency>
         <!-- Lombok (facultatif) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
