@@ -48,6 +48,17 @@
 		    <groupId>org.springframework.cloud</groupId>
 		    <artifactId>spring-cloud-starter-bootstrap</artifactId>
 		</dependency>
+		<!-- CAFFEINE -->
+		<dependency>
+			<groupId>com.github.ben-manes.caffeine</groupId>
+			<artifactId>caffeine</artifactId>
+			<version>3.1.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
+		
         <!-- Lombok (facultatif) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -80,6 +91,90 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+			<!-- GIT-COMMIT-ID-PLUGIN -->
+			<plugin>
+				<groupId>pl.project13.maven</groupId>
+				<artifactId>git-commit-id-plugin</artifactId>
+				<version>4.9.10</version>
+				<executions>
+					<execution>
+						<id>get-the-git-infos</id>
+						<goals>
+							<goal>revision</goal>
+						</goals>
+						<phase>initialize</phase>
+					</execution>
+					<!--
+			        <execution>
+			            <id>validate-the-git-infos</id>
+			            <goals>
+			                <goal>validateRevision</goal>
+			            </goals>
+			            <phase>package</phase>
+			        </execution>
+			        -->
+				</executions>
+				<configuration>
+					<generateGitPropertiesFile>true</generateGitPropertiesFile>
+					<generateGitPropertiesFilename>
+						${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+					<commitIdGenerationMode>full</commitIdGenerationMode>
+					<!--
+					<format>json</format>
+					<failOnNoGitDirectory>false</failOnNoGitDirectory>   			==> omit errors if Git
+					repository has not been found
+					<dotGitDirectory>${project.basedir}/.git</dotGitDirectory>		==> If you want to
+					specify custom .git repository location
+					<prefix>git</prefix>											==> If you want to specify a custom property prefix
+					<verbose>false</verbose>										==> For more generous logging
+
+					<runOnlyOnce>true</runOnlyOnce>									==> When working with project with submodules,
+					setting this flag makes sure that plugin works only for
+					parent repository
+					<excludeProperties>
+					    <excludeProperty>git.user.*</excludeProperty>
+					</excludeProperties>
+					<gitDescribe>
+			            <skip>false</skip>
+			            <always>false</always>
+			            <dirty>-dirty</dirty>
+			        </gitDescribe>
+					-->
+					<includeOnlyProperties>
+						<includeOnlyProperty>git.branch</includeOnlyProperty>
+						<includeOnlyProperty>git.build.user.email</includeOnlyProperty>
+						<includeOnlyProperty>git.build.version</includeOnlyProperty>
+						<includeOnlyProperty>git.build.time</includeOnlyProperty>
+						<includeOnlyProperty>git.commit.id.full</includeOnlyProperty>
+						<includeOnlyProperty>git.commit.user.email</includeOnlyProperty>
+						<includeOnlyProperty>git.commit.message.full</includeOnlyProperty>
+						<includeOnlyProperty>git.commit.time</includeOnlyProperty>
+						<includeOnlyProperty>git.dirty</includeOnlyProperty>
+					</includeOnlyProperties>
+					<!--
+					<validationProperties>			        
+						      <validationProperty>
+			                <name>validating git dirty</name>
+			                <value>${git.dirty}</value>
+			                <shouldMatchTo>false</shouldMatchTo>
+			            </validationProperty>
+			            <validationProperty>
+			                <name>validating git build user</name>
+			                <value>${git.build.user.email}</value>
+			                <shouldMatchTo>jihed.chaabanee@gmail.com</shouldMatchTo>
+			            </validationProperty>
+			        </validationProperties>
+			        -->
+				</configuration>
 			</plugin>
         </plugins>
     </build>
