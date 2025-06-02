@@ -21,7 +21,7 @@
     <dependencies>
     	<dependency>
 		    <groupId>com.chj.gr</groupId>
-		    <artifactId>gr-common-configs</artifactId>
+		    <artifactId>gr-conf-common-params</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
         <!-- Spring Boot Web -->
